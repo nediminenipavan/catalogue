@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script{
                     sh """
-                       echo "Building"
+                       echo "Building" 
                     """
                 }
             }
