@@ -45,7 +45,7 @@ pipeline {
                             docker build -t ${ACC_ID}.dkr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
                             docker images 
                             docker push ${ACC_ID}.dkr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
-                        """ 
+                        """
                     }
                  }
             }
