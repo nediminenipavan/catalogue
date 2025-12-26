@@ -58,6 +58,15 @@ pipeline {
                     }
                 }
         }
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS')
+                // Wait for the SonarQube quality gate status
+                // abortPipeline: true will fail the Jenkins build if the QG fails
+                def qg = waitForQualityGate abortPipeline: true
+                }
+            }
+        }
         stage('Build Image') {
             steps {
                  script{
