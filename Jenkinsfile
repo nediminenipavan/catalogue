@@ -52,7 +52,7 @@ pipeline {
             }
             steps {
                 script{
-                    withSonarQubeEnv('soanr-server') {
+                    withSonarQubeEnv('sonar-server') {
                         sh "${scannerHome}/bin/sonar-scanner"
                         }
                     }
