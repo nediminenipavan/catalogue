@@ -69,7 +69,7 @@ pipeline {
         } */
        stage('Dependabot Security Gate') {
             environment {
-                GITHUB_OWNER = 'daws-86s'
+                GITHUB_OWNER = 'nediminenipavan'
                 GITHUB_REPO  = 'catalogue'
                 GITHUB_API   = 'https://api.github.com'
                 GITHUB_TOKEN = credentials('GITHUB_TOKEN')
@@ -115,24 +115,44 @@ pipeline {
                     
                 }
             }
-       }
-       
-          stage('Build Image') {
+        }
+
+        stage('Build Image') {
             steps {
-                 script{
+                script{
                     withAWS(region:'us-east-1',credentials:'aws-creds') {
                         sh """
-                            aws ecr get-login-password --region us-east-1 \
-                            | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
                             docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
-                            docker images 
+                            docker images
                             docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
                         """
                     }
-                 }
+                }
             }
         }
+        stage('Trivy Scan'){
+            steps {
+                script{
+                    sh """
+                        trivy image \
+                        --scanners vuln \
+                        --severity HIGH,CRITICAL,MEDIUM \
+                        --pkg-types os \
+                        --exit-code 1 \
+                        --format table \
+                        ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
+                    """
+                }
+            }
+        }
+
+    
+
     }
+
+        
+
     post{
         always{
             echo 'I will always say Hello again!'
@@ -146,6 +166,6 @@ pipeline {
         }
         aborted {
             echo 'pipeline is aborted'
-        } 
+        }
     }
-}       
+}
