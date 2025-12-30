@@ -71,7 +71,7 @@ pipeline {
             environment {
                 GITHUB_OWNER = 'nediminenipavan'
                 GITHUB_REPO  = 'catalogue'
-                GITHUB_API   = 'https://api.github.com'
+                GITHUB_API   = 'https://github.com/nediminenipavan/catalogue.git'
                 GITHUB_TOKEN = credentials('GITHUB_TOKEN')
             }
 
