@@ -75,7 +75,7 @@ pipeline {
                 GITHUB_REPO  = 'catalogue'
                 GITHUB_API   = 'https://github.com/nediminenipavan/catalogue.git
                 GITHUB_TOKEN = credentials('GITHUB_TOKEN')
-            }
+            
           
         
 
