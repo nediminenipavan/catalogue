@@ -5,6 +5,7 @@ pipeline {
             label 'AGENT-1'
         }
     }
+}
      environment {
          COURSE = "Jenkins"
          appVersion = ""
@@ -74,6 +75,8 @@ pipeline {
                 GITHUB_API   = 'https://github.com/nediminenipavan/catalogue.git
                 GITHUB_TOKEN = credentials('GITHUB_TOKEN')
             }
+          
+        
 
             steps {
                 script{
